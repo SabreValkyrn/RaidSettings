@@ -1,0 +1,8 @@
+## Interface: 20400
+## Title: RaidSettings
+## Author: Kynura, SabreValkyrn#5816
+## Notes: Sets raid-friendly variables and allows automated raid group sorting.
+## Version: 2.0f
+## SavedVariablesPerCharacter: RaidSettingsData
+
+RaidSettings.lua
