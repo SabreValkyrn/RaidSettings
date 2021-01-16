@@ -70,6 +70,18 @@ SlashCmdList["RAIDSETTINGS"] = function(msg)
             RaidSettingsData['settings']['batch_size'] = tonumber(arg)
             RS:PrintInfo("Setting batch size to " .. arg);
         end
+    elseif cmd == "add" then
+        if arg == "" or arg == nil or string.match(arg, "^%u%l+:[0-8]") == nil then
+            RS:PrintError("Must provide character:group");
+        else
+            RS:AddToProfile(arg)
+        end
+    elseif cmd == "remove" then
+        if arg == "" or arg == nil and string.match(arg, "^%u%l+") == nil then
+            RS:PrintError("Must provide character name");
+        else
+            RS:RemoveFromProfile(arg)
+        end
     else
         RS:PrintError("Unknown command: " .. msg);
         RS:PrintHelp();
@@ -101,6 +113,10 @@ function RS:PrintHelp(msg)
     DEFAULT_CHAT_FRAME:AddMessage(
         "  /rs invite - Invite current profile's roster")
     DEFAULT_CHAT_FRAME:AddMessage("  /rs batch N - Set batch size")
+    DEFAULT_CHAT_FRAME:AddMessage(
+        "  /rs add character:group - Adds character to group roster")
+    DEFAULT_CHAT_FRAME:AddMessage(
+        "  /rs remove character - Removes character from group roster")
 end
 
 function RS:RaidOnlyCommand()
@@ -166,7 +182,7 @@ function RS:ResetProfiles()
             Vanquisher = 2,
             Felbourne = 2,
             Denagul = 2,
-            -- Abaddom = 3,
+            Abaddom = 3,
             Cardran = 3,
             Immoist = 3,
             Getscared = 3,
@@ -261,6 +277,40 @@ function RS:DeleteProfile(profile_name)
     end
     RaidSettingsData['profiles'][profile_name] = nil
     RS:PrintInfo("Deleted profile " .. profile_name);
+end
+
+function RS:AddToProfile(character_mapping)
+    local active_profile = RaidSettingsData['profile']
+    local character_name, character_group =
+        string.split(":", character_mapping, 2)
+
+    if RaidSettingsData['profiles'][active_profile]['layout'][character_name] ~=
+        nil then
+        RS:PrintError("Character " .. character_name .. " already in " ..
+                          active_profile);
+        return false;
+    end
+
+    RaidSettingsData['profiles'][active_profile]['layout'][character_name] =
+        character_group
+
+    RS:PrintInfo("Character " .. character_name .. " added to group " ..
+                     character_group);
+end
+
+function RS:RemoveFromProfile(character_name)
+    local active_profile = RaidSettingsData['profile']
+    if RaidSettingsData['profiles'][active_profile]['layout'][character_name] ==
+        nil then
+        RS:PrintError("Character " .. character_name .. " doesn't exist in " ..
+                          active_profile);
+        return false;
+    end
+
+    RaidSettingsData['profiles'][active_profile]['layout'][character_name] = nil
+
+    RS:PrintInfo("Character " .. character_name .. " removed from " ..
+                     active_profile);
 end
 
 function RS:CleanRaidGroups()
