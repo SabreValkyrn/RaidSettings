@@ -42,6 +42,5 @@ The easiest way to setup your first raid is to do it normally then save the prof
 * `/rs perf` - Toggle performance tweaks
 * `/rs invite` - Invite current profile's roster
 * `/rs batch N` - Set batch size to N
-* `/rs batch N` - Set batch size to N
 * `/rs add character:group` - Adds character to group roster
 * `/rs remove character` - Removes character from group roster
