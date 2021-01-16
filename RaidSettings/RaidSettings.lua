@@ -62,7 +62,14 @@ SlashCmdList["RAIDSETTINGS"] = function(msg)
     elseif cmd == "perf" then
         RS:TogglePerformance()
     elseif cmd == "invite" then
-        RS:InviteRoster()
+        if RS:RaidOnlyCommand() then RS:InviteRoster() end
+    elseif cmd == "batch" then
+        if arg == "" or arg == nil or tonumber(arg) == nil then
+            RS:PrintError("Must provide batch size number");
+        else
+            RaidSettingsData['settings']['batch_size'] = tonumber(arg)
+            RS:PrintInfo("Setting batch size to " .. arg);
+        end
     else
         RS:PrintError("Unknown command: " .. msg);
         RS:PrintHelp();
@@ -93,6 +100,7 @@ function RS:PrintHelp(msg)
     DEFAULT_CHAT_FRAME:AddMessage("  /rs perf - Toggle performance tweaks")
     DEFAULT_CHAT_FRAME:AddMessage(
         "  /rs invite - Invite current profile's roster")
+    DEFAULT_CHAT_FRAME:AddMessage("  /rs batch N - Set batch size")
 end
 
 function RS:RaidOnlyCommand()
@@ -105,7 +113,10 @@ end
 
 function RS:EnsureSchema()
     if RaidSettingsData['settings'] == nil then
-        RaidSettingsData['settings'] = {performance = true}
+        RaidSettingsData['settings'] = {performance = true, batch_size = 5}
+    end
+    if RaidSettingsData['settings']['batch_size'] == nil then
+        RaidSettingsData['settings']['batch_size'] = 5
     end
     if RaidSettingsData['profile'] == nil then RS:ResetProfiles() end
 end
@@ -155,7 +166,7 @@ function RS:ResetProfiles()
             Vanquisher = 2,
             Felbourne = 2,
             Denagul = 2,
-            Abaddom = 3,
+            -- Abaddom = 3,
             Cardran = 3,
             Immoist = 3,
             Getscared = 3,
@@ -285,7 +296,7 @@ function RS:CleanRaidGroups()
     for sort_name, sort_data in pairs(to_sort) do
         change_count = change_count + 1
 
-        if change_count < 5 then
+        if change_count <= RaidSettingsData['settings']['batch_size'] then
             SetRaidSubgroup(sort_data['id'], sort_data['temp_group'])
         else
             RS:PrintInfo("Maximum clean changes reached");
@@ -311,8 +322,8 @@ function RS:InviteRoster()
         random_invite = missing_invite[math.random(#missing_invite)]
         change_count = change_count + 1
 
-        if change_count < 10 then
-            InviteUnit(missing_invite[missing_id])
+        if change_count <= RaidSettingsData['settings']['batch_size'] then
+            InviteUnit(random_invite)
         else
             RS:PrintInfo("Maximum invites reached");
             return true
@@ -336,7 +347,7 @@ function RS:SortRaidGroups()
     for sort_name, sort_data in pairs(to_sort) do
         change_count = change_count + 1
 
-        if change_count < 5 then
+        if change_count <= RaidSettingsData['settings']['batch_size'] then
             SetRaidSubgroup(sort_data['id'], self.GroupLayout[sort_name])
         else
             RS:PrintInfo("Maximum clean changes reached");

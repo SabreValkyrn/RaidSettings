@@ -16,3 +16,4 @@ Because of server rate limiting features, doing too many operations at the same 
 * `/rs list` - List profiles
 * `/rs perf` - Toggle performance tweaks
 * `/rs invite` - Invite current profile's roster
+* `/rs batch N` - Set batch size to N
