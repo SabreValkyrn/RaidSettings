@@ -1,10 +1,8 @@
 # RaidSettings
 
-Because of server rate limiting features, doing too many operations at the same time will cause a disconnect. Batch size is currently 5 by default. Because of this, you will need to repeat certain actions to complete organization.
-
 ## Usage
 
-Start off with clean then sort and repeat until organized.
+Because of server rate limiting features, doing too many operations at the same time will cause a disconnect. Batch size is currently 5 by default. Because of this, you will need to repeat certain actions to complete organization.
 
 1. Invite one other person and convert to raid group
 2. Load the desired profile, for example
