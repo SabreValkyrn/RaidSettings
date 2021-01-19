@@ -167,58 +167,42 @@ end
 
 function RS:ResetProfiles()
     RS:PrintInfo("Resetting profiles");
-    local default_profile = 'perseverance'
+    local default_profile = 'default'
     RaidSettingsData['profile'] = default_profile
     RaidSettingsData['profiles'] = {}
     RaidSettingsData['profiles'][default_profile] = {}
 
     RaidSettingsData['profiles'][default_profile]['layout'] =
         {
-            Nocka = 1,
-            Stavre = 1,
-            Aisin = 1,
-            Megadask = 1,
-            Rabi = 2,
-            Vanquisher = 2,
-            Felbourne = 2,
-            Denagul = 2,
-            Abaddom = 3,
-            Cardran = 3,
-            Immoist = 3,
-            Getscared = 3,
-            Yuyeli = 3,
-            Sylabear = 4,
-            Darkage = 4,
-            Themise = 4,
-            Flamelock = 4,
-            Kynura = 4,
-            Illjustdodge = 5,
-            Saladin = 5,
-            Bakedbeans = 5,
-            UnholyMoly = 5,
-            Clayman = 2,
-            Salahunter = 1,
-            Stavrjr = 5,
-            Timfukis = 5,
-            Asunayuuki = 5,
-            Gankmejr = 1,
-            Wrw = 5,
-            Kagaw = 6,
-            Metresa = 6
+            Bear = 1,
+            Huntera = 1,
+            Hunterb = 1,
+            Hunterc = 1,
+            Enh = 2,
+            Ret = 2,
+            Rogue = 2,
+            Arms = 2,
+            Spriest = 3,
+            Mage = 3,
+            Mage = 3,
+            Hpal = 3,
+            Ele = 3,
+            Boomkin = 4,
+            Locka = 4,
+            Lockb = 4,
+            Lockc = 4,
+            Ele = 4,
+            Rdruida = 5,
+            Protpal = 5,
+            Coh = 5,
+            Protwar = 5,
         }
 
     RaidSettingsData['profiles'][default_profile]['promote'] =
         {
-            Stavre = 1,
-            Stavjr = 1,
-            Clayman = 1,
-            Saladin = 1,
-            Salahunter = 1,
-            Getscared = 1,
-            Bakedbeans = 1,
-            Denagul = 1,
-            Nocka = 1,
-            Kynura = 1
+            Bear = 1,
+            Protwar = 1,
+            Protpal = 1
         }
 end
 
