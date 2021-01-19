@@ -65,7 +65,7 @@ SlashCmdList["RAIDSETTINGS"] = function(msg)
         if RS:RaidOnlyCommand() then RS:InviteRoster() end
     elseif cmd == "batch" then
         if arg == "" or arg == nil or tonumber(arg) == nil then
-            RS:PrintError("Must provide batch size number");
+            RS:PrintError("Must provide batch size number, currently " .. RaidSettingsData['settings']['batch_size']);
         else
             RaidSettingsData['settings']['batch_size'] = tonumber(arg)
             RS:PrintInfo("Setting batch size to " .. arg);
